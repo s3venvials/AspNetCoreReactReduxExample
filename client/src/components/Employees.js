@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getEmployees } from "../actions";
+import { fetchEmployees } from "../actions";
 import moment from "moment";
 import Loader from "./Loader";
 
@@ -15,7 +15,7 @@ const Employees = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    props.getEmployees();
+    props.fetchEmployees();
     // eslint-disable-next-line
   }, []);
 
@@ -27,9 +27,9 @@ const Employees = (props) => {
       return;
     }
 
-    setData([...props.getEmployee]);
+    setData([...props.getEmployees]);
     // eslint-disable-next-line
-  }, [props.getEmployee]);
+  }, [props.getEmployees]);
 
   return (
     <div className="container">
@@ -63,7 +63,7 @@ const Employees = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { getEmployee: state.getEmployee };
+  return { getEmployees: state.getEmployees };
 };
 
-export default connect(mapStateToProps, { getEmployees })(Employees);
+export default connect(mapStateToProps, { fetchEmployees })(Employees);

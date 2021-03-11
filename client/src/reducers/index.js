@@ -4,5 +4,5 @@ import employeeReducer from "./employee.reducer";
 
 export default combineReducers({
   getWeather: weatherForecastReducer,
-  getEmployee: employeeReducer,
+  getEmployees: employeeReducer,
 });

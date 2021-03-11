@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getWeatherForecast } from "../actions";
+import { fetchWeatherForecast } from "../actions";
 import moment from "moment";
 import Loader from "./Loader";
 
@@ -15,7 +15,7 @@ const WeatherForecast = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    props.getWeatherForecast();
+    props.fetchWeatherForecast();
     // eslint-disable-next-line
   }, []);
 
@@ -68,6 +68,6 @@ const mapStateToProps = (state) => {
   return { getWeather: state.getWeather };
 };
 
-export default connect(mapStateToProps, { getWeatherForecast })(
+export default connect(mapStateToProps, { fetchWeatherForecast })(
   WeatherForecast
 );

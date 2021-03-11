@@ -1,16 +1,16 @@
 import * as actions from "./actionTypes";
 import fetch from "node-fetch";
 
-export const getWeatherForecast = () => async (dispatch) => {
+export const fetchWeatherForecast = () => async (dispatch) => {
   const res = await (
     await fetch("https://localhost:5001/api/weatherforecast")
   ).json();
 
-  dispatch({ type: actions.GET_WEATHERFORECAST, payload: res });
+  dispatch({ type: actions.GET_WEATHERFORECAST_ACTION, payload: res });
 };
 
-export const getEmployees = () => async (dispatch) => {
+export const fetchEmployees = () => async (dispatch) => {
   const res = await (await fetch("https://localhost:5001/api/employee")).json();
 
-  dispatch({ type: actions.GET_EMPLOYEES, payload: res });
+  dispatch({ type: actions.GET_EMPLOYEES_ACTION, payload: res });
 };
