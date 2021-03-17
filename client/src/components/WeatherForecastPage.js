@@ -11,7 +11,7 @@ const styles = {
   },
 };
 
-const WeatherForecast = (props) => {
+const WeatherForecastPage = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -69,5 +69,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, { fetchWeatherForecast })(
-  WeatherForecast
+  WeatherForecastPage
 );

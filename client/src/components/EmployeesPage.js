@@ -11,7 +11,7 @@ const styles = {
   },
 };
 
-const Employees = (props) => {
+const EmployeesPage = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -66,4 +66,4 @@ const mapStateToProps = (state) => {
   return { getEmployees: state.getEmployees };
 };
 
-export default connect(mapStateToProps, { fetchEmployees })(Employees);
+export default connect(mapStateToProps, { fetchEmployees })(EmployeesPage);
