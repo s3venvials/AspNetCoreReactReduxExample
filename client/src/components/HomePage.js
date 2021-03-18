@@ -30,7 +30,7 @@ const HomePage = (props) => {
       {alertMessage && <Alert type="alert-success" message={alertMessage} /> }
 
       <h5 style={styles.content}>
-        Example app using ASP.NET Core, Entity Framework, SQLLite, Identity Server 4, React, and Redux
+        Example app using ASP.NET Core, Entity Framework, SQLLite, Identity Server 4, React, Redux, and Bootstrap 5
       </h5>
 
       <LoginForm />
