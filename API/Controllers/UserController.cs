@@ -1,6 +1,7 @@
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -37,17 +38,19 @@ namespace API.Controllers
             return Ok();
         }
 
-        // [Route("~/api/user/login")]
-        // [HttpPost]
-        // public ActionResult PostLogin([FromBody]string userName, string password)
-        // {
-        //     if (!ModelState.IsValid)
-        //        return BadRequest();
+        [Route("~/api/user/login")]
+        [HttpPost]
+        public ActionResult PostLogin([FromBody] Users user)
+        {
+            var users = _context.Users;
 
-        //     //var users = _context.Users;
-            
-        
-        //     return Ok();
-        // }
+            var foundUser = users.Where(u => u.UserName == user.UserName).ToList();
+
+            if (foundUser[0].UserName == user.UserName && foundUser[0].Password == user.Password) {
+                return Ok(foundUser);
+            } else {
+                return Unauthorized();
+            }
+        }
     }
 }

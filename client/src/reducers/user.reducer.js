@@ -5,6 +5,9 @@ const userReducer = (state = [], action) => {
     case actions.POST_USER_REGISTRATION_ACTION:
       return [...state, ...action.payload];
 
+    case actions.POST_USER_LOGIN_ACTION:
+      return [...state, ...action.payload];
+
     default:
       return state;
   }

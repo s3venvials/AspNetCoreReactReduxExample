@@ -1,10 +1,24 @@
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+
 const styles = {
   nav: {
     marginBottom: "2em",
   },
 };
 
-const Navigation = () => {
+const Navigation = (props) => {
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    console.log(props)
+    if (props.loginUser.length){
+      setTimeout(() => {
+        setUser(props.loginUser[0].firstName);
+      }, 700);
+    }
+  });
+
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light bg-light"
@@ -43,10 +57,16 @@ const Navigation = () => {
               </a>
             </li>
           </ul>
+
+          {user && `Hello ${user}!`}
         </div>
       </div>
     </nav>
   );
 };
 
-export default Navigation;
+const mapStateToProps = (state) => {
+  return { loginUser: state.loginUser };
+};
+
+export default connect(mapStateToProps, null)(Navigation);

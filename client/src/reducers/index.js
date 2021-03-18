@@ -6,5 +6,6 @@ import userReducer from "./user.reducer";
 export default combineReducers({
   getWeather: weatherForecastReducer,
   getEmployees: employeeReducer,
-  registerUser: userReducer
+  registerUser: userReducer,
+  loginUser: userReducer
 });

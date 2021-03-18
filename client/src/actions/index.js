@@ -22,7 +22,15 @@ export const postUserRegistration = (body) => async (dispatch) => {
     headers: { 'Content-Type': 'application/json' },
   })).json();
 
-  console.log(res);
-
   dispatch({ type: actions.POST_USER_REGISTRATION_ACTION, payload: res });
+};
+
+export const postUserLogin = (body) => async (dispatch) => {
+  const res = await (await fetch("https://localhost:5001/api/user/login", {
+    method: 'POST',
+    body:    JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json' },
+  })).json();
+
+  dispatch({ type: actions.POST_USER_LOGIN_ACTION, payload: res });
 };

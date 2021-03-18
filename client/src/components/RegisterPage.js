@@ -24,7 +24,7 @@ const RegisterPage = (props) => {
 
         setTimeout(() => {
             history.push("/", { message: "User registration was successful!" });
-        }, 3000);
+        }, 600);
     }
     return (
         <div className="container">
@@ -53,9 +53,9 @@ const RegisterPage = (props) => {
 
                 {isSubmitted ?
                     <button className="btn btn-primary" type="button" disabled>
-                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    {" "}
-                    Registering
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        {" "}
+                        Registering
                     </button>
                 :
                     <button type="submit" className="btn btn-primary">Submit</button>
@@ -67,6 +67,6 @@ const RegisterPage = (props) => {
 
 const mapStateToProps = (state) => {
     return { registerUser: state.registerUser };
-  };
+};
 
 export default connect(mapStateToProps, { postUserRegistration })(RegisterPage);
