@@ -13,7 +13,7 @@ const HomePage = (props) => {
 
   useEffect(() => {
     if (props.location.state) setAlert(props.location.state.message);
-  });
+  }, [props.location.state]);
 
   return (
     <div className="container">

@@ -11,7 +11,6 @@ const Navigation = (props) => {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    console.log(props)
     if (props.loginUser.length){
       setTimeout(() => {
         setUser(props.loginUser[0].firstName);
