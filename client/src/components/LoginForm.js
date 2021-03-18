@@ -31,7 +31,7 @@ const LoginForm = (props) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} style={{ maxWidth: "400px" }}>
+        <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "0 auto" }}>
             <h3>Login</h3>
 
             <div className="mb-3">

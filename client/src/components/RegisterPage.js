@@ -28,7 +28,7 @@ const RegisterPage = (props) => {
     }
     return (
         <div className="container">
-            <form style={{ maxWidth: "400px" }} onSubmit={handleSubmit}>
+            <form style={{ maxWidth: "400px", margin: "0 auto" }} onSubmit={handleSubmit}>
                 <h3>Registration</h3>
 
                 <div className="mb-3">

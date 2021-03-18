@@ -20,7 +20,7 @@ const Navigation = (props) => {
 
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-light bg-light"
+      className="navbar navbar-expand-lg navbar-dark bg-primary"
       style={styles.nav}
     >
       <div className="container-fluid">

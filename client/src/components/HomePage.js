@@ -6,6 +6,16 @@ const styles = {
   title: {
     textAlign: "center",
   },
+  content: {
+    textAlign: "center",
+    border: "1px solid #EEE",
+    borderRadius: "15px",
+    maxWidth: 400,
+    padding: "1em",
+    margin: "1em auto",
+    backgroundColor: "#EEE",
+    boxShadow: "5px 7px #888888"
+  }
 };
 
 const HomePage = (props) => {
@@ -19,11 +29,8 @@ const HomePage = (props) => {
     <div className="container">
       {alertMessage && <Alert type="alert-success" message={alertMessage} /> }
 
-      <h1 style={styles.title}>Home Page</h1>
-      <hr />
-      <h5 style={styles.title}>
-        Example app using ASP.NET Core, Entity Framework with SQLLite, and React
-        Redux
+      <h5 style={styles.content}>
+        Example app using ASP.NET Core, Entity Framework, SQLLite, Identity Server 4, React, and Redux
       </h5>
 
       <LoginForm />
