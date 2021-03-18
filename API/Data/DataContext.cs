@@ -13,8 +13,6 @@ namespace API.Data
 
         public DbSet<WeatherForecast> WeatherForecasts { get; set; }
 
-        public DbSet<LoginUser> LoginUsers { get; set; }
-
-        public DbSet<RegisterUser> RegisterUsers { get; set; }
+        public DbSet<Users> Users { get; set; }
     }
 }

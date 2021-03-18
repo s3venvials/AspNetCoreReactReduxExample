@@ -17,15 +17,13 @@ namespace API.Controllers
 
         [Route("~/api/user/register")]
         [HttpPost]
-        public ActionResult PostRegister([FromBody]RegisterUser user)
+        public ActionResult PostRegister([FromBody]Users user)
         {
 
             if (!ModelState.IsValid)
                return BadRequest();
 
-            try
-            {
-                var newUser = new RegisterUser()
+                var newUser = new Users()
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,
@@ -33,17 +31,23 @@ namespace API.Controllers
                     Password = user.Password
                 };
 
-                _context.RegisterUsers.Add(newUser);
+                _context.Users.Add(newUser);
                 _context.SaveChanges();
-            }
-            catch (System.Exception)
-            {
-                
-                return BadRequest();
-            }
             
-
             return Ok();
         }
+
+        // [Route("~/api/user/login")]
+        // [HttpPost]
+        // public ActionResult PostLogin([FromBody]string userName, string password)
+        // {
+        //     if (!ModelState.IsValid)
+        //        return BadRequest();
+
+        //     //var users = _context.Users;
+            
+        
+        //     return Ok();
+        // }
     }
 }
