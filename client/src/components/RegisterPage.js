@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import { history } from "../helpers";
+import { connect } from "react-redux";
+import { postUserRegistration } from "../actions";
 
-const RegisterPage = () => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [userName, setUserName] = useState("");
-    const [password, setPassword] = useState("");
+const RegisterPage = (props) => {
+    const [FirstName, setFirstName] = useState("");
+    const [LastName, setLastName] = useState("");
+    const [UserName, setUserName] = useState("");
+    const [Password, setPassword] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!firstName || !lastName || !userName || !password) {
+        if (!FirstName || !LastName || !UserName || !Password) {
             alert("All fields are required");
             return;
         }
 
-        alert("Simulating user registration");
-
         setIsSubmitted(true);
+
+        props.postUserRegistration({ FirstName, LastName, UserName, Password });
 
         setTimeout(() => {
             history.push("/", { message: "User registration was successful!" });
@@ -31,22 +33,22 @@ const RegisterPage = () => {
 
                 <div className="mb-3">
                     <label htmlFor="firstNameField" className="form-label">First Name</label>
-                    <input type="text" className="form-control" id="firstNameField" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                    <input type="text" className="form-control" id="firstNameField" value={FirstName} onChange={(e) => setFirstName(e.target.value)} />
                 </div>
 
                 <div className="mb-3">
                     <label htmlFor="lastNameField" className="form-label">Last Name</label>
-                    <input type="text" className="form-control" id="lastNameField" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                    <input type="text" className="form-control" id="lastNameField" value={LastName} onChange={(e) => setLastName(e.target.value)} />
                 </div>
 
                 <div className="mb-3">
                     <label htmlFor="userNameField" className="form-label">Email</label>
-                    <input type="email" className="form-control" id="userNameField" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="name@example.com" />
+                    <input type="email" className="form-control" id="userNameField" value={UserName} onChange={(e) => setUserName(e.target.value)} placeholder="name@example.com" />
                 </div>
 
                 <div className="mb-3">
                     <label htmlFor="passwordField" className="form-label">Password</label>
-                    <input type="password" className="form-control" id="passwordField" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" className="form-control" id="passwordField" value={Password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
 
                 {isSubmitted ?
@@ -63,4 +65,8 @@ const RegisterPage = () => {
     )
 }
 
-export default RegisterPage;
+const mapStateToProps = (state) => {
+    return { registerUser: state.registerUser };
+  };
+
+export default connect(mapStateToProps, { postUserRegistration })(RegisterPage);

@@ -1,6 +1,6 @@
 using System;
 
-namespace API
+namespace API.Entities
 {
     public class WeatherForecast
     {
@@ -15,5 +15,3 @@ namespace API
         public string Summary { get; set; }
     }
 }
-
-//=> 32 + (int)(TemperatureC / 0.5556);

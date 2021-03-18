@@ -14,3 +14,15 @@ export const fetchEmployees = () => async (dispatch) => {
 
   dispatch({ type: actions.GET_EMPLOYEES_ACTION, payload: res });
 };
+
+export const postUserRegistration = (body) => async (dispatch) => {
+  const res = await (await fetch("https://localhost:5001/api/user/register", {
+    method: 'POST',
+    body:    JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json' },
+  })).json();
+
+  console.log(res);
+
+  dispatch({ type: actions.POST_USER_REGISTRATION_ACTION, payload: res });
+};

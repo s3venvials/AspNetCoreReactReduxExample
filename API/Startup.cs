@@ -37,7 +37,8 @@ namespace API
             services.AddCors(options => options.AddDefaultPolicy(
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000").WithMethods("GET");
+                    builder.WithOrigins("http://localhost:3000").WithMethods("GET", "POST");
+                    builder.WithHeaders("Content-Type");
                 }
             ));
             services.AddControllers();

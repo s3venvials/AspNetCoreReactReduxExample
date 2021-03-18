@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using API.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using API.Entities;
 
 namespace API.Controllers
 {

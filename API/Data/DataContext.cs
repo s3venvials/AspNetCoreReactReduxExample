@@ -12,5 +12,9 @@ namespace API.Data
         public DbSet<Employees> Employees { get; set; }
 
         public DbSet<WeatherForecast> WeatherForecasts { get; set; }
+
+        public DbSet<LoginUser> LoginUsers { get; set; }
+
+        public DbSet<RegisterUser> RegisterUsers { get; set; }
     }
 }
