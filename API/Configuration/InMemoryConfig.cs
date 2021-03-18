@@ -12,7 +12,12 @@ namespace API.Configuration
         new List<IdentityResource>
         {
             new IdentityResources.OpenId(),
-            new IdentityResources.Profile()
+            new IdentityResources.Profile(),
+            new IdentityResource
+            {
+                Name = "role",
+                UserClaims = new List<string> {"role"}
+            }
         };
 
         public static List<TestUser> GetUsers() =>
@@ -45,12 +50,36 @@ namespace API.Configuration
         public static IEnumerable<Client> GetClients() =>
         new List<Client>
         {
-        new Client
-        {
+            new Client
+            {
                 ClientId = "company-employee",
                 ClientSecrets = new [] { new Secret("codemazesecret".Sha512()) },
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                 AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId }
+            },
+            new Client
+            {
+                ClientId = "employees",
+                ClientSecrets = new [] { new Secret("supersecret".Sha512()) },
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, "employeeapi.read", "employeeapi.write" }
+            }
+        };
+
+        public static IEnumerable<ApiScope> GetApiScopes() =>
+        new []
+        {
+            new ApiScope("employeeapi.read"),
+            new ApiScope("employeeapi.write"),
+        };
+
+        public static IEnumerable<ApiResource> GetApiResources() => new[]
+        {
+            new ApiResource("employees")
+            {
+                Scopes = new List<string> { "employeeapi.read", "employeeapi.write" },
+                ApiSecrets = new List<Secret> { new Secret("scopesecret".Sha256()) },
+                UserClaims = new List<string> {"role"}
             }
         };
     }

@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class EmployeeController : ControllerBase
     {
         private readonly DataContext _context;

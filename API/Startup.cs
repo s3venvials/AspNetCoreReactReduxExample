@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Logging;
 
 namespace API
 {
@@ -24,16 +24,29 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication("Bearer", options => 
+                {
+                    options.ApiName = "employees";
+                    options.Authority = "http://localhost:5000";
+                    options.RequireHttpsMetadata = false;
+                });
+
             services.AddIdentityServer()
             .AddInMemoryIdentityResources(InMemoryConfig.GetIdentityResources())
+            .AddInMemoryApiResources(InMemoryConfig.GetApiResources())
+            .AddInMemoryApiScopes(InMemoryConfig.GetApiScopes())
             .AddTestUsers(InMemoryConfig.GetUsers())
             .AddInMemoryClients(InMemoryConfig.GetClients())
             .AddDeveloperSigningCredential(); //not something we want to use in a production environment;
+
+            IdentityModelEventSource.ShowPII = true;
             
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
+
             services.AddCors(options => options.AddDefaultPolicy(
                 builder =>
                 {
@@ -41,11 +54,8 @@ namespace API
                     builder.WithHeaders("Content-Type");
                 }
             ));
+
             services.AddControllers();
-            // services.AddSwaggerGen(c =>
-            // {
-            //     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,20 +64,14 @@ namespace API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                // app.UseSwagger();
-                // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
 
             app.UseIdentityServer();
-
             app.UseHttpsRedirection();
-
-            app.UseRouting();
-
             app.UseCors();
-
+            app.UseAuthentication();
+            app.UseRouting();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
