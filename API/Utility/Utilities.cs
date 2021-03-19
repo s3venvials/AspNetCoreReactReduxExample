@@ -1,8 +1,9 @@
 using System.Security.Cryptography;
+using API.Interfaces;
 
 namespace API.Utility
 {
-    public class Utilities
+    public class Utilities : IUtilities
     {
         public byte[] GenerateSalt(int length = 20)
         {

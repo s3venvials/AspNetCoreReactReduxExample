@@ -22,7 +22,7 @@ export const postUserRegistration = (body) => async (dispatch) => {
     headers: { 'Content-Type': 'application/json' },
   });
 
-  const result = res.text() === typeof String ? [{ message: res.text() }] : res.json();
+  const result = await res.text() === typeof String ? [{ message: res.text() }] : res.json();
 
   dispatch({ type: actions.POST_USER_REGISTRATION_ACTION, payload: result });
 };
