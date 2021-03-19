@@ -1,5 +1,7 @@
 using API.Configuration;
 using API.Data;
+using API.Interfaces;
+using API.Modules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +58,8 @@ namespace API
             ));
 
             services.AddControllers();
+
+            services.AddScoped<IRegisterService, RegisterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

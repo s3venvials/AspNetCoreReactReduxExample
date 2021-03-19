@@ -2,6 +2,7 @@ using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using API.Interfaces;
 
 namespace API.Controllers
 {
@@ -10,30 +11,22 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IRegisterService _registerService;
 
-        public UserController(DataContext context)
+        public UserController(DataContext context, IRegisterService registerService)
         {
             _context = context;
+            _registerService = registerService;
         }
 
         [Route("~/api/user/register")]
         [HttpPost]
         public ActionResult PostRegister([FromBody]Users user)
         {
-
             if (!ModelState.IsValid)
-               return BadRequest();
+                return BadRequest();
 
-                var newUser = new Users()
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    UserName = user.UserName,
-                    Password = user.Password
-                };
-
-                _context.Users.Add(newUser);
-                _context.SaveChanges();
+            _registerService.CreateUserProfile(user);
             
             return Ok();
         }
