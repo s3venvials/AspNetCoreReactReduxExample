@@ -12,11 +12,13 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IRegisterService _registerService;
+        private readonly ILoginService _loginService;
 
-        public UserController(DataContext context, IRegisterService registerService)
+        public UserController(DataContext context, IRegisterService registerService, ILoginService loginService)
         {
             _context = context;
             _registerService = registerService;
+            _loginService = loginService;
         }
 
         [Route("~/api/user/register")]
@@ -33,15 +35,14 @@ namespace API.Controllers
 
         [Route("~/api/user/login")]
         [HttpPost]
-        public ActionResult PostLogin([FromBody] Users user)
+        public ActionResult PostLogin([FromBody]Users user)
         {
-            var users = _context.Users;
-
-            var foundUser = users.Where(u => u.UserName == user.UserName).ToList();
-
-            if (foundUser[0].UserName == user.UserName && foundUser[0].Password == user.Password) {
-                return Ok(foundUser);
-            } else {
+            if (_loginService.LoginUser(user))
+            {
+                return Ok();
+            }
+            else
+            {
                 return Unauthorized();
             }
         }

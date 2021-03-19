@@ -18,13 +18,13 @@ namespace API.Modules
         public void CreateUserProfile(Users user)
         {
             var salt = _utilities.GenerateSalt();
-            var hashPassword = _utilities.GenerateHash(user.Password, salt, 10, 20);
+            var hashPassword = _utilities.GenerateHash(user.Hash, salt, 10, 20);
             var newUser = new Users()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 UserName = user.UserName,
-                Password = hashPassword,
+                Hash = hashPassword,
                 Salt = salt
             };
 
