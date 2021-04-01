@@ -1,32 +1,25 @@
 import React, { useState } from "react";
-import { history } from "../helpers";
 import { connect } from "react-redux";
 import { postUserLogin } from "../actions";
+import { history } from "../helpers";
 
 const LoginForm = (props) => {
     const [UserName, setUserName] = useState("");
-    const [Password, setPassword] = useState("");
+    const [Hash, setHash] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!UserName || !Password) {
-            alert("All fields are required");
-            return;
-        }
-
         setIsSubmitted(true);
 
-        props.postUserLogin({ UserName, Password });
-
-        //Clear Form
-        setUserName("");
-        setPassword("");
+        props.postUserLogin({ UserName, Hash });
 
         setTimeout(() => {
-            history.push("/", { message: "User successfully signed in!" });
             setIsSubmitted(false);
+
+            //Clear Form
+            setUserName("");
+            setHash("");
         }, 600);
     }
 
@@ -41,7 +34,7 @@ const LoginForm = (props) => {
 
             <div className="mb-3">
                 <label htmlFor="passwordField" className="form-label">Password</label>
-                <input type="password" className="form-control" id="passwordField" value={Password} onChange={(e) => setPassword(e.target.value)} />
+                <input type="password" className="form-control" id="passwordField" value={Hash} onChange={(e) => setHash(e.target.value)} />
             </div>
 
             {isSubmitted ? 

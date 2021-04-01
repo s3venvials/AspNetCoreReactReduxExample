@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LoginForm from "./LoginForm";
 import Alert from "./Alert";
+import { connect } from "react-redux";
 
 const styles = {
   title: {
@@ -19,15 +20,27 @@ const styles = {
 };
 
 const HomePage = (props) => {
-  const [alertMessage, setAlert] = useState("");
+  console.log(props);
+  const [message, setMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
 
   useEffect(() => {
-    if (props.location.state) setAlert(props.location.state.message);
-  }, [props.location.state]);
+    if (props.registerUser) {
+      setMessage("");
+      props.registerUser.status !== 202 ? setAlertType("danger") : setAlertType("success");
+      setMessage(props.registerUser.message);
+    };
+
+    if (props.loginUser) {
+      setMessage("");
+      props.loginUser.status !== 202 ? setAlertType("danger") : setAlertType("success");
+      setMessage(props.loginUser.message);
+    };
+  }, [props.registerUser, props.loginUser]);
 
   return (
     <div className="container">
-      {alertMessage && <Alert type="alert-success" message={alertMessage} /> }
+      {message && <Alert type={`alert-${alertType}`} message={message} /> }
 
       <h5 style={styles.content}>
         Example app using ASP.NET Core, Entity Framework, SQLLite, Identity Server 4, React, Redux, and Bootstrap 5
@@ -38,4 +51,8 @@ const HomePage = (props) => {
   );
 };
 
-export default HomePage;
+const mapStateToProps = (state) => {
+  return { registerUser: state.registerUser, loginUser: state.loginUser };
+};
+
+export default connect(mapStateToProps, null)(HomePage);

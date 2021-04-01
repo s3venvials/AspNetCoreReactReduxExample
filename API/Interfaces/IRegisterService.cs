@@ -4,6 +4,6 @@ namespace API.Interfaces
 {
     public interface IRegisterService
     {
-        void CreateUserProfile(Users user);
+        int CreateUserProfile(Users user);
     }
 }

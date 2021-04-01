@@ -18,17 +18,14 @@ namespace API.Modules
 
         public bool LoginUser(Users user)
         {
-            bool result = false;
+            bool isValidUser = false;
             var users = _context.Users;
             var foundUser = users.Where(u => u.UserName == user.UserName).ToList();
-            var compareHash = _utilities.GenerateHash(user.Hash, foundUser[0].Salt, 10, 20);
 
-            if (foundUser[0].Hash == compareHash)
-            {
-                result = true;
-            }
+            if (foundUser.Count > 0)
+                isValidUser = BCrypt.Net.BCrypt.Verify(user.Hash, foundUser[0].Hash);
 
-            return result;
+            return isValidUser;
         }
     }
 }

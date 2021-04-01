@@ -1,6 +1,8 @@
+using System.Linq;
 using API.Data;
 using API.Entities;
 using API.Interfaces;
+using API.Models;
 
 namespace API.Modules
 {
@@ -15,21 +17,26 @@ namespace API.Modules
             _utilities = utilities;
         }
 
-        public void CreateUserProfile(Users user)
+        public int CreateUserProfile(Users user)
         {
-            var salt = _utilities.GenerateSalt();
-            var hashPassword = _utilities.GenerateHash(user.Hash, salt, 10, 20);
+            var salt = BCrypt.Net.BCrypt.GenerateSalt(10);
+            var hash = BCrypt.Net.BCrypt.HashPassword(user.Hash, salt);
+            var userExist = _context.Users.Where(u => u.UserName == user.UserName).ToList();
+        
+            if (userExist.Count > 0)
+                return 0;
+
             var newUser = new Users()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 UserName = user.UserName,
-                Hash = hashPassword,
+                Hash = hash,
                 Salt = salt
             };
 
             _context.Users.Add(newUser);
-            _context.SaveChanges();
+            return _context.SaveChanges();
         }
     }
 }

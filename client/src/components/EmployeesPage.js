@@ -27,7 +27,7 @@ const EmployeesPage = (props) => {
       return;
     }
 
-    setData([...props.getEmployees]);
+    setData(props.getEmployees.employeeData.length ? [...props.getEmployees.employeeData] : []);
     // eslint-disable-next-line
   }, [props.getEmployees]);
 

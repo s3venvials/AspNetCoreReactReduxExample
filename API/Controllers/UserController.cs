@@ -3,11 +3,14 @@ using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using API.Interfaces;
+using System.Collections.Generic;
+using API.Models;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Produces("application/json")]
     public class UserController : ControllerBase
     {
         private readonly DataContext _context;
@@ -23,28 +26,32 @@ namespace API.Controllers
 
         [Route("~/api/user/register")]
         [HttpPost]
-        public ActionResult PostRegister([FromBody]Users user)
+        public ActionResult<ResponseModel> PostRegister([FromBody]Users user)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
+            var registerServiceResponse = _registerService.CreateUserProfile(user);
 
-            _registerService.CreateUserProfile(user);
-            
-            return Ok();
+            if (registerServiceResponse == 1)
+            {
+                return Ok(new ResponseModel() { Message="User successfully registered!", Status = 202 });
+            }
+            else
+            {
+                return Ok(new ResponseModel() { Message="Issue processing your request, please try again.", Status = 400 });
+            }
         }
 
         [Route("~/api/user/login")]
         [HttpPost]
-        public ActionResult PostLogin([FromBody]Users user)
+        public ActionResult<ResponseModel> PostLogin([FromBody]Users user)
         {
-            if (_loginService.LoginUser(user))
+            if (_loginService.LoginUser(user)) 
             {
-                return Ok();
+                return Ok(new ResponseModel() { Message = "Successfully signed in!", Status = 202 });
             }
             else
             {
-                return Unauthorized();
-            }
+                return Ok(new ResponseModel() { Message = "401 Unauthorized", Status = 401 });
+            } 
         }
     }
 }

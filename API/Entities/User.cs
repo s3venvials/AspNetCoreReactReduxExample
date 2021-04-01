@@ -10,8 +10,8 @@ namespace API.Entities
 
         public string UserName { get; set; }
 
-        public byte[] Hash { get; set; }
+        public string Hash { get; set; }
 
-        public byte[] Salt { get; set; }
+        public string Salt { get; set; }
     }
 }

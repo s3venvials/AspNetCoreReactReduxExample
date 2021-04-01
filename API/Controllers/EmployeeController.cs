@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using API.Data;
 using API.Entities;
+using API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    // [Authorize(AuthenticationSchemes = "Bearer")]
     public class EmployeeController : ControllerBase
     {
         private readonly DataContext _context;
@@ -21,15 +22,16 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Employees>> GetEmployees()
+        public ActionResult<ResponseModel> GetEmployees()
         {
-            return _context.Employees.ToList();
+            var employees = _context.Employees.ToList();
+            return Ok(new ResponseModel() { Message = "", Status = 202 });
         }
 
         [HttpGet("{id}")]
         public ActionResult<Employees> GetEmployee(int id)
         {
-            return _context.Employees.Find(id);
+            return Ok(_context.Employees.Find(id));
         }
     }
 }
